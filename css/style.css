@@ -128,3 +128,23 @@ main#main-content {
     border-radius: 5px;
   }
 }
+
+.toc-sidebar {
+  width: 16vw;           /* Dinámico como el izquierdo */
+  max-width: 250px;      /* No más ancho que el izquierdo */
+  min-width: 150px;      /* No más angosto que el izquierdo */
+  padding: 1rem;         /* Espaciado interno uniforme */
+  background-color: #f5f5f5; /* (opcional) color neutro para distinguirlo del contenido */
+  overflow-y: auto;      /* Scroll vertical si el índice crece */
+}
+
+.foto-naren {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+}

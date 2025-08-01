@@ -2,7 +2,7 @@ const content = {
   sobre_mi:
   `
   <iframe src="assets/notebooks/acerca.html" class="embed-notebook"></iframe>
-`,
+  `,
 
   ar: `
   <iframe src="assets/notebooks/ar_model2.html" class="embed-notebook"></iframe>
@@ -26,12 +26,22 @@ const content = {
 
 function showContent(model) {
   const mainContent = document.getElementById("main-content");
+  const tocSidebar = document.querySelector(".toc-sidebar");
   const rawHtml = content[model];
 
   const srcMatch = rawHtml.match(/src="([^"]+)"/);
   const src = srcMatch ? srcMatch[1] : null;
 
   mainContent.innerHTML = "";
+
+  // 👉 Oculta el índice lateral si se está mostrando información personal
+  if (model === "sobre_mi") {
+    tocSidebar.style.display = "none";
+    mainContent.innerHTML = rawHtml;
+    return;
+  } else {
+    tocSidebar.style.display = "block";
+  }
 
   if (src) {
     const iframe = document.createElement("iframe");
@@ -40,7 +50,6 @@ function showContent(model) {
 
     mainContent.appendChild(iframe);
 
-    // Espera segura hasta que el iframe esté disponible
     const checkLoaded = setInterval(() => {
       const doc = iframe.contentDocument || iframe.contentWindow.document;
       if (doc && doc.readyState === "complete") {
@@ -49,11 +58,11 @@ function showContent(model) {
       }
     }, 300);
   } else {
-    // contenido directo en HTML
     mainContent.innerHTML = rawHtml;
-    updateTOCFromContainer(mainContent); // para contenido directo
+    updateTOCFromContainer(mainContent);
   }
 }
+
 
 
 function updateTOCFromIframe(iframe) {

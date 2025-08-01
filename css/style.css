@@ -87,3 +87,44 @@ main#main-content {
   border-left: 3px solid #1976d2;
   padding-left: 0.4em;
 }
+
+/* 📚 Sidebar responsive */
+.sidebar {
+  width: 16vw; /* ← se ajusta dinámicamente al ancho de la pantalla */
+  max-width: 250px; /* límite superior para pantallas grandes */
+  min-width: 150px; /* límite inferior para pantallas pequeñas */
+  background-color: #003366;
+  color: white;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+/* 🧠 Comportamiento en pantallas pequeñas */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 75vw;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .sidebar-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    background-color: #003366;
+    color: white;
+    padding: 0.5rem;
+    cursor: pointer;
+    z-index: 1100;
+    border-radius: 5px;
+  }
+}

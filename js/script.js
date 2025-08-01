@@ -1,10 +1,12 @@
 const content = {
   ar: "<h2>Modelo AR</h2><p>Modelo autoregresivo donde la variable depende de sus rezagos.</p>",
-  ar: `<iframe src="assets/notebooks/ar_model.html" 
-  class="embed-notebook"></iframe>`,
+  ar: `<iframe src="assets/notebooks/ar_model.html" class="embed-notebook"></iframe>`,
   
 
   ma: "<h2>Modelo MA</h2><p>Modelo de medias móviles basado en errores anteriores.</p>",
+
+  ma: `<iframe src="assets/notebooks/ma_model.html" class="embed-notebook"></iframe>`,
+
   arima: "<h2>ARIMA</h2><p>Modelo clásico que combina AR y MA con diferenciación.</p>",
   sarima: "<h2>SARIMA</h2><p>Extiende ARIMA incorporando estacionalidad.</p>",
   var: "<h2>VAR</h2><p>Modelo multivariado que captura relaciones entre múltiples series.</p>",

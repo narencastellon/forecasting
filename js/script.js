@@ -1,6 +1,7 @@
 const content = {
   ar: "<h2>Modelo AR</h2><p>Modelo autoregresivo donde la variable depende de sus rezagos.</p>",
-  ar: `<iframe src="assets/notebooks/ar_model.html" class="notebook-frame"></iframe>`,
+  ar: `<iframe src="assets/notebooks/ar_model.html" 
+  class="embed-notebook"></iframe>`,
   
 
   ma: "<h2>Modelo MA</h2><p>Modelo de medias móviles basado en errores anteriores.</p>",

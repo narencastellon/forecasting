@@ -2,36 +2,36 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Forecasting con VAR | Naren Castellón</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Modelos de Forecasting</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header>
-    <h1>Forecasting con Modelos VAR</h1>
-    <nav>
-      <a href="index.html">Inicio</a>
-      <a href="var-model.html">Modelo VAR</a>
-      <a href="contacto.html">Contacto</a>
-    </nav>
-  </header>
-
-  <main>
-    <h2>Introducción</h2>
-    <p>Los modelos VAR permiten capturar relaciones dinámicas entre múltiples series temporales. Son ampliamente usados en macroeconomía, logística y forecasting multivariado.</p>
-
-    <h2>Ejemplo de modelo</h2>
-    <p>Considera un sistema con variables como demanda, inventario y precio. Cada una se modela como función de sus propios rezagos y los de las otras.</p>
-
-    <h2>Recursos</h2>
-    <ul>
-      <li><a href="https://narencastellon.github.io/forecasting/var-model.slides.html">Slides del modelo VAR</a></li>
-      <li><a href="https://en.wikipedia.org/wiki/Vector_autoregression">VAR en Wikipedia</a></li>
-    </ul>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Naren Castellón</p>
-  </footer>
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Modelos Clásicos</h2>
+      <ul>
+        <li onclick="showContent('ar')">AR</li>
+        <li onclick="showContent('ma')">MA</li>
+        <li onclick="showContent('arima')">ARIMA</li>
+        <li onclick="showContent('sarima')">SARIMA</li>
+        <li onclick="showContent('var')">VAR</li>
+        <li onclick="showContent('mfles')">MFLES</li>
+      </ul>
+      <h2>Modelos ML</h2>
+      <ul>
+        <li onclick="showContent('randomforest')">Random Forest</li>
+        <li onclick="showContent('xgboost')">XGBoost</li>
+        <li onclick="showContent('catboost')">CatBoost</li>
+        <li onclick="showContent('lightgbm')">LightGBM</li>
+      </ul>
+    </aside>
+    <main id="main-content">
+      <h1>Bienvenido, Naren</h1>
+      <p>Selecciona un modelo del menú para ver contenido técnico.</p>
+    </main>
+  </div>
+  <script src="js/script.js"></script>
 </body>
 </html>
+
 

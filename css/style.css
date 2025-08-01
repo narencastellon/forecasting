@@ -52,17 +52,38 @@ main#main-content {
   align-items: flex-start;
 }
 
-.toc-sidebar {
-  width: 250px;
-  padding: 1rem;
-  background-color: #f4f4f4;
-  border-left: 1px solid #ccc;
-  height: 100vh;
-  overflow-y: auto;
-  position: sticky;
-  top: 0;
+.toc-sidebar ul {
+  list-style: none;
+  padding-left: 0;
 }
 
+.collapsible {
+  margin-bottom: 0.5em;
+}
 
+.toc-h2-label {
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0.3em 0;
+}
 
+.toc-sublist {
+  display: none;
+  margin-left: 1em;
+}
 
+.collapsible.expanded .toc-sublist {
+  display: block;
+}
+
+.toc-h3 {
+  font-style: italic;
+  cursor: pointer;
+  margin-top: 0.2em;
+}
+
+.active-toc {
+  background-color: #e0f2ff;
+  border-left: 3px solid #1976d2;
+  padding-left: 0.4em;
+}

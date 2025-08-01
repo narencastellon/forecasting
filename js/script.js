@@ -1,14 +1,11 @@
 const content = {
 
   ar: `
-  <h2>Modelo AR</h2>
-  <p>Modelo autoregresivo donde la variable depende de sus rezagos.</p>
-  <iframe src="assets/notebooks/ar_model.html" class="embed-notebook"></iframe>
+  <iframe src="assets/notebooks/ar_model2.html" class="embed-notebook"></iframe>
 `,
 
   ma: `
-  <h2>Modelo MA</h2>
-  <p>Modelo de medias móviles basado en errores anteriores.</p>
+
   <iframe src="assets/notebooks/ma_model.html" class="embed-notebook"></iframe>
 `,
 
@@ -23,34 +20,100 @@ const content = {
 };
 
 
+function showContent(model) {
+  const mainContent = document.getElementById("main-content");
+  const rawHtml = content[model];
+
+  const srcMatch = rawHtml.match(/src="([^"]+)"/);
+  const src = srcMatch ? srcMatch[1] : null;
+
+  mainContent.innerHTML = "";
+
+  if (src) {
+    const iframe = document.createElement("iframe");
+    iframe.src = src;
+    iframe.className = "embed-notebook";
+
+    mainContent.appendChild(iframe);
+
+    // Espera segura hasta que el iframe esté disponible
+    const checkLoaded = setInterval(() => {
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      if (doc && doc.readyState === "complete") {
+        clearInterval(checkLoaded);
+        updateTOCFromIframe(iframe);
+      }
+    }, 300);
+  } else {
+    // contenido directo en HTML
+    mainContent.innerHTML = rawHtml;
+    updateTOCFromContainer(mainContent); // para contenido directo
+  }
+}
 
 
-
-function updateTOC() {
+function updateTOCFromIframe(iframe) {
   const tocList = document.getElementById("toc-list");
   tocList.innerHTML = "";
 
-  const headings = document.querySelectorAll("#main-content h2, #main-content h3");
+  const doc = iframe.contentDocument || iframe.contentWindow.document;
+  if (!doc) return;
+
+  const headings = Array.from(doc.querySelectorAll(".jp-RenderedMarkdown h2, .jp-RenderedMarkdown h3"));
+  const indexMap = new Map();
+  let currentGroup = null;
 
   headings.forEach(heading => {
-    const text = heading.innerText;
-    const id = text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]/g, "");
+    const codeElem = heading.querySelector("code");
+    const text = codeElem ? codeElem.textContent.trim() : heading.textContent.trim();
+    const id = heading.id || text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]/g, "");
+    if (!id || !text) return;
+
     heading.id = id;
 
-    const item = document.createElement("li");
-    item.textContent = text;
-    item.onclick = () => {
-      document.getElementById(id).scrollIntoView({ behavior: "smooth" });
-    };
+    if (heading.tagName === "H2") {
+      const groupItem = document.createElement("li");
+      groupItem.className = "toc-h2 collapsible";
 
-    tocList.appendChild(item);
+      const groupLabel = document.createElement("div");
+      groupLabel.textContent = text;
+      groupLabel.className = "toc-h2-label";
+      groupLabel.onclick = () => groupItem.classList.toggle("expanded");
+
+      const subList = document.createElement("ul");
+      subList.className = "toc-sublist";
+
+      groupItem.appendChild(groupLabel);
+      groupItem.appendChild(subList);
+      tocList.appendChild(groupItem);
+
+      currentGroup = subList;
+      indexMap.set(id, groupLabel);
+    } else if (heading.tagName === "H3" && currentGroup) {
+      const subItem = document.createElement("li");
+      subItem.textContent = text;
+      subItem.className = "toc-h3";
+      subItem.onclick = () => heading.scrollIntoView({ behavior: "smooth" });
+
+      currentGroup.appendChild(subItem);
+      indexMap.set(id, subItem);
+    }
   });
+
+  // Resaltado dinámico
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const id = entry.target.id;
+      const item = indexMap.get(id);
+      if (item) {
+        item.classList.toggle("active-toc", entry.isIntersecting);
+      }
+    });
+  }, {
+    root: doc,
+    rootMargin: '0px 0px -80% 0px',
+    threshold: 0
+  });
+
+  headings.forEach(h => observer.observe(h));
 }
-
-function showContent(model) {
-  const mainContent = document.getElementById("main-content");
-  mainContent.innerHTML = content[model] || "<p>Modelo no encontrado.</p>";
-  updateTOC(); // 🔁 actualiza el índice cuando se carga un nuevo modelo
-}
-
-

@@ -1,4 +1,8 @@
 const content = {
+  sobre_mi:
+  `
+  <iframe src="assets/notebooks/acerca.html" class="embed-notebook"></iframe>
+`,
 
   ar: `
   <iframe src="assets/notebooks/ar_model2.html" class="embed-notebook"></iframe>
